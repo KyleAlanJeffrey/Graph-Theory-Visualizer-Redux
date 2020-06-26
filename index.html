@@ -22,10 +22,21 @@
         </button>
         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
             <ul class="navbar-nav w-100 justify-content-start " id="toolbar">
-                <button id="nodeCreate" class="btn btn-md btn-inverse text-white"
-                    onclick="nodeCreateToolClicked()">Nodes</button>
+
+                <div class="btn-group">
+                    <button id="node-dropdown" type="button" class="btn btn-md btn-inverse text-white dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Nodes
+                    </button>
+                    <div class="dropdown-menu">
+                        <a id="nodeCreate" class="dropdown-item" onclick="toolbar.nodeCreateButtonClicked()">Create Nodes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Choose Start Node</a>
+                        <a class="dropdown-item" href="#">Choose Destination Node</a>
+                    </div>
+                </div>
                 <button id="edgeCreate" class="btn btn-md btn-inverse text-white"
-                    onclick="edgeCreateToolClicked()">Edges</button>
+                    onclick="toolbar.edgeCreateButtonClicked()">Edges</button>
                 <button id="" class="btn btn-md btn-Danger" onclick="BFSclicked()">RUN BFS</button>
                 <button id="" class="btn btn-md btn-Primary" onclick="nodesArray[0].connect()">Connect</button>
             </ul>
@@ -42,7 +53,7 @@
     <script src="js\jquery-3.5.1.js"></script>
     <script src="js/classes.js"></script>
     <script src="js/alogrithms.js"></script>
-    <script src="js/loop.js"></script>
+    <script src="js/animationLoop.js"></script>
     <script src="js/events.js"></script>
 
 

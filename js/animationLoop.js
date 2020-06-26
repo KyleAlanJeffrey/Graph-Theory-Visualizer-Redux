@@ -2,9 +2,11 @@
 //Global Variabales
 let nodesArray = [];
 let edgesArray = [];
-let graph = new Graph();
 var edgeCreateInProgress = false;
+let graph = new Graph();
+var toolbar = new Toolbar();
 
+var svgElement = document.getElementById("svg");
 let canvas = document.getElementById("canvas");
 const WIDTH = canvas.clientWidth;
 const HEIGHT = canvas.clientHeight;
@@ -15,8 +17,8 @@ const NAVBAR_WIDTH = document.getElementById("navbar").clientWidth;
 window.requestAnimationFrame(loop)
 
 function loop() {
-    
-    if (edgeCreateInProgress) { //If current edge is being used
+
+    if (toolbar.edgeCreateinProgress) { //If current edge is being used
         let currentEdge = edgesArray.pop();
         edgesArray.forEach(edge => edge.update());
         currentEdge.updateWithMouse(mouseX, mouseY);
@@ -25,8 +27,7 @@ function loop() {
         edgesArray.forEach(edge => edge.update());
     }
 
-    nodesArray.forEach(node => node.updateVel(WIDTH,HEIGHT));     //updade html node elements
-    nodesArray.forEach(node => node.update());     //updade html node elements
+    nodesArray.forEach(node => node.update(WIDTH, HEIGHT));     //updade html node elements from node object properties
 
     window.requestAnimationFrame(loop)
 }

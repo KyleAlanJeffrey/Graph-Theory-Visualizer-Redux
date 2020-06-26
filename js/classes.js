@@ -43,7 +43,8 @@ class Node {
         this.velx = 0;
         this.vely = 0;
     }
-    update() {
+    update(boundX, boundY) {
+        this.updateVel(boundX, boundY);
         this.nodeElement.style.top = this.y + 'px'
         this.nodeElement.style.left = this.x + 'px'
     }
@@ -108,7 +109,38 @@ class Edge {
 
 }
 
-
+class Toolbar {
+    constructor() {
+        this.nodeCreateTool = false;
+        this.edgeCreateTool = false;
+        this.edgeCreateinProgress = false;
+        this.nodeMoveinProgress = false;
+    }
+    nodeCreateButtonClicked() {
+        $("#edgeCreate").removeClass("button-active");
+        $("#node-dropdown").toggleClass("button-active");
+        $("#nodeCreate").toggleClass("button-active");
+        this.edgeCreateTool = false;
+        this.nodeCreateTool = !this.nodeCreateTool;
+        /* If currently making an edge, delete when edge button clicked */
+        if (this.edgeCreateinProgress) {
+            edgesArray.pop().destroyHTMLElement();
+            this.edgeCreateinProgress = false;
+        }
+    }
+    edgeCreateButtonClicked() {
+        $("#node-dropdown").removeClass("button-active");
+        $("#nodeCreate").removeClass("button-active");
+        $("#edgeCreate").toggleClass("button-active");
+        this.nodeCreateTool = false;
+        this.edgeCreateTool = !this.edgeCreateTool;
+        /* If currently making an edge, delete when edge button clicked */
+        if (this.edgeCreateinProgress) {
+            edgesArray.pop().destroyHTMLElement();
+            this.edgeCreateinProgress = false;
+        }
+    }
+}
 class Queue {
     constructor() {
         this.elements = [];
