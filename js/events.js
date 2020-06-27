@@ -15,17 +15,17 @@ function BFSclicked() {
 }
 function mouseMove(e) {
     mouseX = e.clientX;
-    mouseY = e.clientY-NAVBAR_HEIGHT;
+    mouseY = e.clientY;
+    console.log(`${mouseX},${mouseY}`)
     if (toolbar.nodeMoveinProgress) {
         currentNode.x = mouseX - NODE_RADIUS;
-        currentNode.y = mouseY;
-        console.log(`${mouseY},${currentNode.y}`)
+        currentNode.y = mouseY - NODE_RADIUS;
     }
 }
 
 function canvasClicked() {
     if (toolbar.nodeCreateTool) {//Nodecreatetool must be active to make node
-        nodeCreate(mouseX, mouseY + NAVBAR_HEIGHT);
+        nodeCreate(mouseX, mouseY);
     }
 }
 
