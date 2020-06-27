@@ -39,9 +39,16 @@
                 </div>
                 <button id="edgeCreate" class="btn btn-md btn-inverse text-white"
                     onclick="toolbar.edgeCreateButtonClicked()">Edges</button>
-                <button id="" class="btn btn-md btn-Danger" onclick="BFSclicked()">RUN BFS</button>
-                <button id="" class="btn btn-md btn-Primary" onclick="nodesArray[0].connect()">Connect</button>
-                <button id="" class="btn btn-md btn-Warning" onclick="resetNodes()">Clear Nodes</button>
+                <div class="btn-group">
+                    <button id="graph-dropdown" type="button" class="btn btn-md btn-inverse text-white dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utility</button>
+                    <div class="dropdown-menu">
+                        <button id="" class="btn btn-md btn-Danger" onclick="BFSclicked()">RUN BFS from 0</button>
+                        <button id="" class="btn btn-md btn-warning" onclick="nodesArray[0].connect()">Connectify Node 0</button>
+                        <button id="" class="btn btn-md btn-info" onclick="resetNodes()">Clear Node Coloring</button>
+                        <button id="" class="btn btn-md btn-Danger" onclick="clearAllNodes()">Clear Board</button>
+                    </div>
+                </div>
                 <!-- Graph Builder Dropdown menu -->
                 <div class="btn-group">
                     <button id="graph-dropdown" type="button" class="btn btn-md btn-inverse text-white dropdown-toggle"
@@ -56,7 +63,7 @@
     </nav>
 
     <div class="jumbotron canvas" id="canvas" onclick="canvasClicked();">
-        <svg id="svg" height="100%" width="100%" style="position: absolute;">
+        <svg id="svg" height="100%" width="100%">
             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="2.5" orient="auto">
                 <polygon points="0 0, 5 2.5, 0 5" />
             </marker>
