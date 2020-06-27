@@ -1,4 +1,4 @@
-const NODE_RADIUS = 50;
+const NODE_RADIUS = 35;
 
 function random(low, high, floor) {
     if (floor) {

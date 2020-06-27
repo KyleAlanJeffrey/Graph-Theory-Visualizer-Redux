@@ -11,14 +11,15 @@ document.body.onmousemove = mouseMove;
 
 function BFSclicked() {
     bfsObj = new BFS_class(graph, 0);
-    bfsInterval = setInterval(() => { BFS(bfsObj) }, 300);
+    bfsInterval = setInterval(() => { BFS(bfsObj) }, 50);
 }
 function mouseMove(e) {
     mouseX = e.clientX;
-    mouseY = e.clientY - NAVBAR_HEIGHT;
+    mouseY = e.clientY-NAVBAR_HEIGHT;
     if (toolbar.nodeMoveinProgress) {
         currentNode.x = mouseX - NODE_RADIUS;
         currentNode.y = mouseY;
+        console.log(`${mouseY},${currentNode.y}`)
     }
 }
 
@@ -28,21 +29,11 @@ function canvasClicked() {
     }
 }
 
-function nodeCreate(x, y) {
-    let body = document.getElementById("canvas");
-    let node = new Node(x - NODE_RADIUS, y - NODE_RADIUS, body);
-    node.nodeElement.onmousedown = function () { nodeClicked(node) }; //Cannot do this inside the constructor because can't pass "this" 
-    nodesArray.push(node);
-    graph.addVertex();
-    node.nodeElement.classList += " node-placed";
-}
-
 function nodeClicked(node) {
     /* Enable Moving NodeClicked */
     if (!toolbar.nodeCreateTool && !toolbar.edgeCreateTool) {
         toolbar.nodeMoveinProgress = !toolbar.nodeMoveinProgress;
         currentNode = node;
-
         /* Create Edge And Assign Second Node to Mouse Pointer */
     } else if (toolbar.edgeCreateTool && !toolbar.edgeCreateinProgress) {
         toolbar.edgeCreateinProgress = true;
@@ -56,36 +47,32 @@ function nodeClicked(node) {
 
         // DELETE DUPLICATE EDGES
         let edgeWithSameTerminus = edgesArray.filter(edge => edge.node2 == node); //find edges with same node2
-        if (edgeWithSameTerminus[0]) {
-            if (edgeWithSameTerminus[0].node1 == currentEdge.node1) { //delete edge if the same edge
-                currentEdge.destroyHTMLElement();
-                edgesArray.pop();
-            }
-        }else{
+        let edgeWithSameOrigin = edgeWithSameTerminus.filter(edge => edge.node1 == currentEdge.node1);
+        if (edgeWithSameOrigin[0]) {
+            currentEdge.destroyHTMLElement();
+            edgesArray.pop();
+        } else {
             currentEdge.node2 = node;
             graph.addEdge(currentEdge.node1.vertex, currentEdge.node2.vertex);
-    
         }
+
 
     }
 }
 
-// function createGrid() {
-//     let body = document.getElementById("canvas");
-//     let padding = 20;
-//     let nodeSpace = NODE_RADIUS * 2 + padding;
-//     let w = WIDTH / nodeSpace;
-//     let h = HEIGHT / nodeSpace;
-//     for (let i = 0; i < h - 1; i++) {
-//         for (let j = 0; j < w - 1; j++) {
-//             nodeCreate(nodeSpace * j, nodeSpace * i, body);
-//         }
-//     }
-// }
-// function destroyGrid() {
-//     let n = nodesArray.length;
-//     for (let index = 0; index < n; index++) {
-//         let node = nodesArray.pop();
-//         node.destroyHTMLElement();
-//     }
-// }
+function nodeCreate(x, y) {
+    let body = document.getElementById("canvas");
+    let node = new Node(x - NODE_RADIUS, y - NODE_RADIUS, body);
+    node.nodeElement.onmousedown = function () { nodeClicked(node) }; //Cannot do this inside the constructor because can't pass "this" 
+    nodesArray.push(node);
+    graph.addVertex();
+    node.nodeElement.classList += " node-placed";
+    console.log("making node...");
+}
+function resetNodes(){
+    $(".node").removeClass("node-searched node-discovered")
+}
+function clearAllNodes(){
+    nodesArray.forEach(node => node.destroyHTMLElement());
+    nodesArray = [];
+}
