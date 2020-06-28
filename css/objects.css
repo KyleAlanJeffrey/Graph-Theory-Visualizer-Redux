@@ -26,10 +26,9 @@
 }
 
 .node:hover {
-    /* background-color: rgb(160, 136, 1);
+    background-color: rgb(160, 136, 1);
     cursor: pointer;
-    transform: scale(1.3); */
-    animation: node-discovered-anim 1s;
+    transform: scale(1.3);
 }
 
 @keyframes node-searched-anim {
