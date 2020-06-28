@@ -112,6 +112,6 @@ class BFS_class {
         }
         this.allNeighborsDiscovered = true;
         this.color[this.x] = "black";
-        nodesArray[this.x].nodeElement.classList += " node-searched";
+        nodesArray[this.x].nodeElement.firstChild.classList += " node-searched";
     }
 }

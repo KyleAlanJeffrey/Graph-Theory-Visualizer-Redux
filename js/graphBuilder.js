@@ -12,6 +12,7 @@ class basicGrid {
     iterateInnerLoop() {
         if (this.j < this.w) {
             nodeCreate(this.nodeSpace * this.j + NODE_RADIUS, this.nodeSpace * this.i + NAVBAR_HEIGHT + NODE_RADIUS);
+            nodesArray[nodesArray.length-1].edgetoPrev();
             this.j++;
         } else {
             this.j = 0;
@@ -44,5 +45,5 @@ function createBasicGrid() {
     clearNodesandEdges();
     var basicGridObj = new basicGrid();
     basicGridObj.animate();
-    setTimeout(function(){nodesArray[0].connect();},2000)
+    // setTimeout(function(){nodesArray[0].connect();},2000)
 }

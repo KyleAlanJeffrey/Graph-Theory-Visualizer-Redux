@@ -1,54 +1,37 @@
+var mouseX = 0;
+var mouseY = 0;
+
 var currentNode = undefined;
 var currentEdge = undefined;
-var bfsInterval;
-
-var algorithm = "";
-var algorithmSpeed = 50;
 
 var algorithmConfig = {
     algorithm: "",
     speed: 50,
-    cssSpeed: "1s"
+    cssSpeed: "1s",
+    startNode : undefined,
+    destNode: undefined
 }
-var mouseX = 0;
-var mouseY = 0;
-
+document.body.onmousemove = mouseMove;
 var bfsObj;
 
-document.body.onmousemove = mouseMove;
 
 function runAlgorithm() {
-    if (algorithm == "bfs") {
+    if (algorithmConfig.algorithm == "bfs") {
         bfsObj = new BFS_class(graph, 0);
-        bfsInterval = setInterval(() => { BFS(bfsObj) }, algorithmSpeed);
+        bfsInterval = setInterval(() => { BFS(bfsObj) }, algorithmConfig.speed);
     } else {
         console.log("No Algorithm Selected!");
         $("#visualize").text("Select an Algorithm!");
     }
 }
-var preNodeMoveinProg = false;
 function mouseMove(e) {
-    let velX = mouseX;
-    let velY = mouseY;
     mouseX = e.clientX;
     mouseY = e.clientY;
-
-    velX -= mouseX;
-    velY -= mouseY;
-
-    
-    if(toolbar.nodeMoveinProgress && !preNodeMoveinProg){
-        currentNode.velx = velX;
-        currentNode.vely = velY;
-    }
     if (toolbar.nodeMoveinProgress) {
         currentNode.x = mouseX - NODE_RADIUS;
         currentNode.y = mouseY - NODE_RADIUS;
 
     }
-
-    preNodeMoveinProg = toolbar.nodeMoveinProgress;
-
 }
 
 function canvasClicked() {
@@ -65,7 +48,7 @@ function nodeClicked(node) {
         /* Create Edge And Assign Second Node to Mouse Pointer */
     } else if (toolbar.edgeCreateTool && !toolbar.edgeCreateinProgress) {
         toolbar.edgeCreateinProgress = true;
-        let edge = new Edge(mouseX, mouseY, node, undefined, svgElement);
+        let edge = new Edge(node, undefined, svgElement);
         currentEdge = edge;
         edgesArray.push(edge);
 
@@ -77,11 +60,11 @@ function nodeClicked(node) {
         let edgeWithSameTerminus = edgesArray.filter(edge => edge.node2 == node); //find edges with same node2
         let edgeWithSameOrigin = edgeWithSameTerminus.filter(edge => edge.node1 == currentEdge.node1);
         if (edgeWithSameOrigin[0]) {
+            console.log("Can't make duplicate Edges")
             currentEdge.destroyHTMLElement();
             edgesArray.pop();
         } else {
-            currentEdge.node2 = node;
-            graph.addEdge(currentEdge.node1.vertex, currentEdge.node2.vertex);
+            currentEdge.setNode2(node);
         }
 
 
@@ -92,11 +75,8 @@ function nodeCreate(x, y) {
     let body = document.getElementById("canvas");
     let node = new Node(x - NODE_RADIUS, y - NODE_RADIUS, body);
     node.nodeElement.onmousedown = function () { nodeClicked(node) }; //Cannot do this inside the constructor because can't pass "this" 
-
     nodesArray.push(node);
     graph.addVertex();
-    node.nodeElement.classList += " node-placed";
-    console.log("making node...");
 }
 function resetNodes() {
     $(".node").removeClass("node-searched node-discovered")
