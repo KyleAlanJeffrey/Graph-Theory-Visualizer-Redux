@@ -36,10 +36,13 @@ class basicGrid {
     }
     animate() {
         var self = this;
-        this.interval = setInterval(function () { self.iterate(); }, 50);
+        this.interval = setInterval(function () { self.iterate(); }, 10);
     }
 }
+
 function createBasicGrid() {
+    clearNodesandEdges();
     var basicGridObj = new basicGrid();
     basicGridObj.animate();
+    setTimeout(function(){nodesArray[0].connect();},2000)
 }

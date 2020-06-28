@@ -1,49 +1,104 @@
-.node{
+.node-animater {
+    /* height: 100%; */
+    /* width: 100%; */
+    border-radius: 50%;
+}
+
+.node {
     border-radius: 50%;
     width: 70px;
     height: 70px;
-    transition: transform .2s;
-    transition: background-color .3s;
+    /* transition: transform .2s; */
+    /* transition: background-color .3s; */
     background-color: gold;
     border-style: solid black 2px;
     text-align: center;
     position: absolute;
 }
-.node p{
+
+.node p {
     height: 100%;
     /* padding-top: 40%; */
     font-size: 30;
     user-select: none;
     margin: 0;
 }
-.node:hover{
-    background-color: rgb(160, 136, 1);
+
+.node:hover {
+    /* background-color: rgb(160, 136, 1);
     cursor: pointer;
-    transform: scale(1.3);
+    transform: scale(1.3); */
 }
-@keyframes node-placed-anim{
-    0% {transform: scale(1.5);
-        background-color:rgb(92, 78, 0)}
-    50% {transform: scale(.8);}
-    100% {transform: scale(1);
-    background-color: gold;}
+@keyframes node-searched-anim {
+    0% {
+        transform: scale(.3);
+        background-color: gold;
+    }
+    50% {
+        background-color: rgb(165, 140, 0);
+    }
+    75% {
+        transform: scale(1.2);
+        background-color: rgb(80, 68, 0);
+    }
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(0, 0, 0);
+    }
 }
-.node-placed{
+
+@keyframes node-discovered-anim {
+    0% {
+        transform: scale(.3);
+        background-color: #7fdbffc2;
+    }
+    50% {
+        background-color: #42b4e0c2;
+    }
+    75% {
+        transform: scale(1.2);
+        background-color: #257c9ec2;
+    }
+    100% {
+        transform: scale(1.0);
+        background-color: #7fdbffc2;
+    }
+}
+
+@keyframes node-placed-anim {
+    0% {
+        transform: scale(1.5);
+        background-color: rgb(92, 78, 0)
+    }
+    50% {
+        transform: scale(.8);
+    }
+    100% {
+        transform: scale(1);
+        background-color: gold;
+    }
+}
+
+.node-placed {
     animation: node-placed-anim .5s;
 }
-.node-discovered{
-    background-color: grey;
-    animation: node-placed-anim .5s;
+
+.node-animater-discovered {
+    animation: node-discovered-anim .5s;
+    background-color: #7fdbffc2;
 }
-.node-searched{
+
+.node-searched {
+    animation: node-searched-anim .5s;
     background-color: black;
-    animation: node-placed-anim .5s;
 }
-.edge{
+
+.edge {
     stroke: red;
     stroke-width: 8;
 }
-.edge:hover{
+
+.edge:hover {
     stroke: rgb(131, 0, 0);
     cursor: pointer;
 }

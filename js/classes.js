@@ -13,6 +13,8 @@ class Graph {
         this.edgeSet = [];
         this.adjMatrix = [];
         this.size = 0;
+        this.source = undefined;
+        this.dest = undefined;
     }
     addVertex() {
         this.vertexSet[this.size] = this.size;
@@ -27,17 +29,22 @@ class Graph {
 
 class Node {
     constructor(x, y, parentElement) {
+        console.log("making Node");
         //make html element
         let nodeElement = document.createElement("div");
+        let nodeAnimater = document.createElement('div');
         let text = document.createElement("p");
+
+        nodeAnimater.classList += " node-animater";
         text.innerText = nodesArray.length;
-        this.vertex = nodesArray.length;
-        nodeElement.appendChild(text);
+        nodeElement.appendChild(nodeAnimater);
+        nodeAnimater.appendChild(text);
         nodeElement.classList.add("node");
         parentElement.appendChild(nodeElement);
 
         this.nodeElement = nodeElement;
 
+        this.vertex = nodesArray.length;
         this.x = x;
         this.y = y;
         this.velx = 0;
@@ -139,6 +146,10 @@ class Toolbar {
             edgesArray.pop().destroyHTMLElement();
             this.edgeCreateinProgress = false;
         }
+    }
+    bfsClicked() {
+        algorithm = "bfs";
+        $("#visualize").text("Visualize Algorithm");
     }
 }
 class Queue {
