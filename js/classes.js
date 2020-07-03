@@ -23,7 +23,16 @@ class Graph {
     } addEdge(n1, n2) {
         console.log(`Added edge: ${n1},${n2}`);
         this.adjMatrix[n1].push(n2);
-
+    }
+    createAdjMatrix() {
+        let adj = [];
+        let i = 0;
+        this.adjMatrix.forEach((adjList) => {
+            adj[i] = [];
+            adj[i] = adjList.slice()
+            i++;
+        })
+        return adj;
     }
 }
 
@@ -203,15 +212,19 @@ class Toolbar {
         switch (text) {
             case "Usain Bolt":
                 algorithmConfig.speed = 5;
+                root.style.setProperty('--animation-time', '.2s');
                 break;
             case "Fast":
                 algorithmConfig.speed = 50;
+                root.style.setProperty('--animation-time', '.4s');
                 break;
             case "Medium":
                 algorithmConfig.speed = 200;
+                root.style.setProperty('--animation-time', '1s');
                 break;
             case "Slow":
                 algorithmConfig.speed = 500;
+                root.style.setProperty('--animation-time', '1.5s');
                 break;
         }
     }

@@ -11,6 +11,7 @@ const WIDTH = canvas.clientWidth;
 const HEIGHT = canvas.clientHeight;
 const NAVBAR_HEIGHT = document.getElementById("navbar").clientHeight;
 const NAVBAR_WIDTH = document.getElementById("navbar").clientWidth;
+const root = document.documentElement;
 
 // Start Animation Loop
 window.requestAnimationFrame(loop)
