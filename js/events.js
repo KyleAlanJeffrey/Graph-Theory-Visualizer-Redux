@@ -15,10 +15,13 @@ function runAlgorithm() {
         return;
     }
     if (algorithmConfig.algorithm == "bfs") {
-        console.log("here");
         resetNodes();
         algorithmConfig.algorithmObj = new BFS_class(graph);
         algorithmConfig.intervalObj = setInterval(() => { BFS(algorithmConfig.algorithmObj) }, algorithmConfig.speed);
+    }else if(algorithmConfig.algorithm === 'dfs'){
+        resetNodes();
+        algorithmConfig.algorithmObj = new DFSClass(graph);
+        algorithmConfig.intervalObj = setInterval(() => { DFS() }, algorithmConfig.speed);
     } else {
         console.log("No Algorithm Selected!");
         $("#visualize").text("Select an Algorithm!");

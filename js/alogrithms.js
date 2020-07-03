@@ -23,6 +23,16 @@ function BFS(bfsObject) {
     bfsObject.findNeighbor();
     algorithmFunctions.animateNodesCSS(bfsObject.color);
 }
+function DFS() {
+    let dfsObj = algorithmConfig.algorithmObj;
+    if (dfsObj.finished) {
+        clearInterval(algorithmConfig.intervalObj);
+        console.log("DFS Finished");
+        return;
+    }
+    dfsObj.visit();
+    algorithmFunctions.animateNodesCSS(dfsObj.color);
+}
 
 class BFS_class {
     constructor(graph) {
@@ -66,41 +76,72 @@ class BFS_class {
                 this.parent[this.y] = this.x;
                 this.q.enqueue(this.y);
             }
-            if (this.y == this.d) this.destNodeFound(); //If the destination node is found 
+            if (this.y == this.d) {
+                this.finished = true;
+                createDestinationPath(this.parent, this.s, this.d);
+            }
             return;
         }
         this.allNeighborsDiscovered = true;
         this.color[this.x] = "black";
     }
-    destNodeFound() {
-        console.log("Found Destination Node!");
-        this.finished = true;
-        pathObj = new pathBuilder(this.parent);
-        pathObj.buildPath(this.s, this.d);
-        pathObj.animate(algorithmConfig.speed);
-    }
 }
 
+// DFS only has visited and unvisited and doesn't track distance 
 class DFSClass {
-    constructor(G, s, d) {
-        
+    constructor(G) {
+        this.source = G.source;
+        this.dest = G.dest;
+        this.n = G.size;
+        this.S = [];
+        this.color = algorithmFunctions.createColorArray(this.n);
+        this.parent = algorithmFunctions.createParentArray(this.n);
+        this.adj = graph.createAdjMatrix();//makes a clone of the adjacency matrix
+        this.finished = false;
+
+        this.S.push(G.source);
+
         //     DFS(G,v)   ( v is the vertex where the search starts )
-        //     Stack S := {};   ( start with an empty stack )
-        //     for each vertex u, set visited[u] := false;
-        //     push S, v;
-        //     while (S is not empty) do
+        //      Stack S := {};   ( start with an empty stack )
+        //      for each vertex u, set visited[u] := false;
+        //      push S, v;
+        //      while (S is not empty) do
         //        u := pop S;
         //        if (not visited[u]) then
         //           visited[u] := true;
         //           for each unvisited neighbour w of u
         //              push S, w;
         //        end if
-        //     end while
-        //  END DFS()
+        //      end while
+        //     END DFS()
 
+    }
+    visit() {
+        if (this.S.length != 0) {
+            let x = this.S.pop();
+            if (x == this.dest) {
+                this.finished = true;
+                // createDestinationPath(this.parent, this.source, this.dest);
+            }
+            if (this.color[x] == 'white') {
+                this.color[x] = 'grey';
+                this.adj[x].forEach(neighbor => {
+                    this.S.push(neighbor);
+                    this.parent[neighbor] = x;
+                });
+            }
+        } else {
+            this.finished = true;
+        }
     }
 }
 
+function createDestinationPath(parent, source, dest) {
+    console.log("Found Destination Node!");
+    pathObj = new pathBuilder(parent);
+    pathObj.buildPath(source, dest);
+    pathObj.animate(algorithmConfig.speed);
+}
 
 class pathBuilder {
     constructor(parentArray) {

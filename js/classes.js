@@ -198,11 +198,21 @@ class Toolbar {
         }
         this.edgeCreateinProgress = false;
     }
-    bfsClicked() {
+    algorithmClicked(button) {
         this.deactivateCreateButtons();
-        algorithmConfig.algorithm = "bfs";
         $("#visualize").text("Visualize Algorithm");
-        $("#algorithm").text("Algorithm: BFS");
+        switch (button.innerText) {
+            case "BFS": {
+                algorithmConfig.algorithm = "bfs";
+                $("#algorithm").text("Algorithm: BFS");
+                break;
+            }
+            case "DFS": {
+                algorithmConfig.algorithm = "dfs";
+                $("#algorithm").text("Algorithm: DFS");
+                break;
+            }
+        }
 
     }
     algorithmSpeedClicked(btn) {
