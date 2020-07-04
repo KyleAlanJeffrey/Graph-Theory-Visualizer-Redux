@@ -23,6 +23,7 @@ class Graph {
     } addEdge(n1, n2) {
         console.log(`Added edge: ${n1},${n2}`);
         this.adjMatrix[n1].push(n2);
+        this.edgeSet.push(`${n1},${n2}`);
     }
     createAdjMatrix() {
         let adj = [];
@@ -143,9 +144,39 @@ class Edge {
         let edgeHTML = this.edgeElement;
         edgeHTML.parentNode.removeChild(edgeHTML);
     }
+    static deletedUnwantedEdges(node) {
+        const n1 = currentEdge.node1.vertex;
+        const n2 = node.vertex;
+        if (n1 == n2) {
+            deleteLastEdge();
+            return;
+        }
 
+        let duplEdge = false;
+        graph.edgeSet.forEach(edge => {
+            const nodes = edge.split(',');
+            if (n1 == nodes[0] && n2 == nodes[1]) {
+                console.log("Deleting Duplicate Edge");
+                duplEdge = true;
+                deleteLastEdge();
+            }
+        });
+        if (!duplEdge) {
+            currentEdge.setNode2(node);
+        }
+    }
+    // let edgeWithSameTerminus = edgesArray.filter(edge => edge.node2 == node); //find edges with same node2
+    // let edgeWithSameOrigin = edgeWithSameTerminus.filter(edge => edge.node1 == currentEdge.node1);
+    // if (edgeWithSameOrigin[0]) {
+    //     console.log("Can't make duplicate Edges")
+    //     deleteLastEdge();
+    // } else {
+    //     currentEdge.setNode2(node);
 
+    // }
 }
+
+
 
 class Toolbar {
     constructor() {
