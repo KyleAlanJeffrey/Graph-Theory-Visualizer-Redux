@@ -69,7 +69,7 @@ class BFS_class {
     findNeighbor() {
         if (this.adj[this.x].length != 0) {
             this.y = this.adj[this.x].shift();
-            console.log(`searching ${this.y}, looking for ${graph.dest}`);
+            // console.log(`searching ${this.y}, looking for ${graph.dest}`);
             if (this.color[this.y] == "white") {
                 this.color[this.y] = "grey";
                 this.distance[this.y] = this.distance[this.x] + 1;
@@ -95,7 +95,7 @@ class DFSClass {
         this.n = G.size;
         this.S = [];
         this.color = algorithmFunctions.createColorArray(this.n);
-        this.parent = algorithmFunctions.createParentArray(this.n);
+        this.parent = algorithmFunctions.createColorArray(this.n);
         this.adj = graph.createAdjMatrix();//makes a clone of the adjacency matrix
         this.finished = false;
 
@@ -121,13 +121,14 @@ class DFSClass {
             let x = this.S.pop();
             if (x == this.dest) {
                 this.finished = true;
-                // createDestinationPath(this.parent, this.source, this.dest);
+                console.log(this.parent);
+                createDestinationPath(this.parent, this.source, this.dest);
             }
             if (this.color[x] == 'white') {
                 this.color[x] = 'grey';
                 this.adj[x].forEach(neighbor => {
                     this.S.push(neighbor);
-                    this.parent[neighbor] = x;
+                    if (this.color[neighbor] == 'white') this.parent[neighbor] = x;
                 });
             }
         } else {
@@ -210,4 +211,8 @@ class algorithmFunctions {
         });
     }
 
+}
+
+function forceQuitAlgorithm() {
+    clearInterval(algorithmConfig.intervalObj);
 }
